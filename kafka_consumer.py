@@ -1,5 +1,7 @@
 from confluent_kafka import Consumer, KafkaError
 import json
+from datetime import datetime
+import time
 import sqlite3
 from init_db import *
 
@@ -48,12 +50,12 @@ def analyze_data(data):
 
     vehicle_risk_scores[vehicle_id] = risk_score
 
-    conn = sqlite3.connect('../HighDCollisionSimulation/vehicle_risk_scores.db')
+    conn = sqlite3.connect('vehicle_risk_scores.db')
     c = conn.cursor()
 
     # Insert or replace the current score
-    c.execute('REPLACE INTO risk_scores (vehicle_id, risk_score) VALUES (?, ?)',
-              (vehicle_id, risk_score))
+    c.execute('''REPLACE INTO risk_scores (vehicle_id, risk_score) VALUES (?, ?)''', (vehicle_id, risk_score))
+
     conn.commit()
     conn.close()
 

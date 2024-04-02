@@ -17,7 +17,7 @@ producer = create_kafka_producer()
 topic_name = 'collision-sim'
 
 
-# Example function to send data
+# function to send data
 def send_data_to_kafka(data):
     def acked(err, msg):
         if err is not None:
